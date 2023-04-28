@@ -1,0 +1,242 @@
+.wrapper {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #1a1a1a;
+    overflow: auto;
+    .intro_films {
+        width: 100%;
+        height: auto;
+        min-height: 758px;
+        padding: 10px;
+        background-color: #1a1a1a;
+        box-sizing: border-box;
+        border-bottom: 2px solid #efc72a;
+        .img_films {
+            width: 100%;
+            height: 420px;
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            .btn_see {
+                width: 100px;
+                height: 40px;
+                border-radius: 5px;
+                margin-top: 5px;
+                background-color: #d9534f;
+                border: none;
+                color: white;
+            }
+        }
+        .name_films {
+            width: 100%;
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+            height: auto;
+            height: 40px;
+            overflow: hidden;
+            max-height: 40px;
+        }
+        .name_films_years {
+            width: 100%;
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+            height: auto;
+            height: 20px;
+            overflow: hidden;
+            max-height: 40px;
+        }
+        .three_new_chapter {
+            width: 100%;
+            height: 60px;
+            background-color: #1a1a1a;
+            margin-top: 10px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+
+            .new_chapter {
+                width: 54px;
+                height: 80%;
+                margin-left: 4px;
+                border-radius: 5px;
+                border: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                background-color: #286090;
+                color: wheat;
+                font-size: 16px;
+            }
+        }
+        .episode {
+            width: 100%;
+            height: 20px;
+            margin-top: -10px;
+        }
+        .category {
+            width: 100%;
+            height: 20px;
+            margin-top: -10px;
+        }
+        .time {
+            width: 100%;
+            height: 20px;
+            margin-top: -10px;
+        }
+        .views {
+            width: 100%;
+            height: 20px;
+            margin-top: -10px;
+        }
+        .media_year {
+            width: 100%;
+            height: 20px;
+            margin-top: -10px;
+        }
+        .show_like {
+            width: 100%;
+            height: 30px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+        }
+        .star {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+            margin-top: 10px;
+        }
+    }
+    .content_films {
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        text-align: center;
+        color: aliceblue;
+        background-color: #282828;
+    }
+    .info_content {
+        width: 100%;
+        height: auto;
+        min-height: 50px;
+        background-color: #282828;
+        color: white;
+        margin-top: 5px;
+        padding: 5px;
+        padding-left: 10px;
+        box-sizing: border-box;
+    }
+    .info_content2 {
+        width: 100%;
+        height: auto;
+        min-height: 50px;
+        background-color: #282828;
+        color: white;
+        margin-top: 15px;
+        padding: 5px;
+        padding-left: 10px;
+        box-sizing: border-box;
+    }
+    .comment {
+        width: 100%;
+        height: auto;
+        min-height: 250px;
+        background-color: white;
+        margin-top: 10px;
+        .show_number_comment {
+            width: 100%;
+            height: 70px;
+            background-color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            padding: 5px;
+            box-sizing: border-box;
+            border-bottom: 1px solid #cbc4c4;
+            padding-bottom: 30px;
+        }
+        .input_comment {
+            width: 100%;
+            min-height: 100px;
+            background-color: #fff;
+            position: relative;
+            height: auto;
+            padding: 10px;
+            box-sizing: border-box;
+            .btn_comment {
+                width: 99.3%;
+                height: 40px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                text-align: center;
+                border: 1px solid #beb8b8;
+            }
+            .btn_comment input {
+                width: 80%;
+                outline: none;
+                margin-left: 5px;
+            }
+        }
+        .link_facebook {
+            width: 100%;
+            height: 40px;
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 20px;
+            align-items: center;
+            text-align: center;
+        }
+        .link_facebook img {
+            width: 20px;
+            height: 20px;
+        }
+    }
+    .foot_web {
+        width: 100%;
+        height: 85px;
+        background-color: #282828;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        .info_footer {
+            width: 90%;
+            height: 90%;
+            background-color: #282828;
+            .logo_footer {
+                width: 100%;
+                height: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+            .end_footer {
+                width: 100%;
+                height: 50%;
+                display: flex;
+                justify-content: center;
+                text-align: center;
+                align-items: center;
+            }
+        }
+    }
+
+}

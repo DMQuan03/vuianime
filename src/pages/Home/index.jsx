@@ -1,10 +1,12 @@
 import React from 'react'
+import {useNavigate} from "react-router-dom"
 import classNames from 'classnames/bind'
 import styles from "./home.module.scss"
 import {
     GiHamburgerMenu
 } from "react-icons/gi"
 import LISTFILMS from './listFilms/listfilms'
+import ConfigRoutes from '../../config/config.routes'
 
 const test = [
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -12,6 +14,7 @@ const test = [
 
 const cx = classNames.bind(styles)
 const HOMEPAGE = () => {
+    const navigate = useNavigate()
   return (
     <div className={cx("wrapper_home")}>
         <div className={cx("selector_films")}>
@@ -23,11 +26,17 @@ const HOMEPAGE = () => {
                         }
                     } >PHIM BỘ MỚI CẬP NHẬT</p></div>
                 </div>
-                <div className={cx("see_all")}><a style={
+                <div 
+                className={cx("see_all")}><p
+                onClick={() => {
+                    navigate(ConfigRoutes.allFilms)
+                }}
+                style={
                         {
-                            fontSize : ".7rem"
+                            fontSize : ".7rem",
+                            cursor : "pointer"
                         }
-                    }>Xem tất cả</a></div>
+                    }>Xem tất cả</p></div>
             </div>
         <div className={cx("list_films")}>
             {test.map(el => {

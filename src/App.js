@@ -7,20 +7,20 @@ import { Fragment } from 'react';
 function App() {
   return (
     <Router>
+        <div>
       <Routes>
-        {PublicRoutes.map(router => {
-          const PAGE = router.component
-          var Layout = DEFAULTLAYOUT
-          if (router.Layout) {
-            var Layout = router.Layout
-          }else if (router.Layout === null) {
-            var Layout = <Fragment />
-          }
-          return <Route path='/' element={<Layout>
-            <PAGE />
-          </Layout>}  />
-        })}
+          {PublicRoutes.map((router, index )=> {
+            const PAGE = router.component
+            var Layout = DEFAULTLAYOUT
+            if (router.Layout) {
+              var Layout = router.Layout
+            }else if (router.Layout === null) {
+              var Layout = <Fragment />
+            }
+            return <Route key={index} path={router.path} element={<Layout><PAGE /></Layout>}  />
+          })}
       </Routes>
+        </div>
     </Router>
   );
 }
