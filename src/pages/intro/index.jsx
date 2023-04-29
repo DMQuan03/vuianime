@@ -1,15 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import classNames from 'classnames/bind'
 import styles from "./index.module.scss"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import {
     AiFillLike
 } from "react-icons/ai"
-import ConfigRoutes from '../../config/config.routes'
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import movieSlice from '../../redux/slice/movieSlice'
 
 const cx = classNames.bind(styles)
 
 const INTROFILMS = () => {
+
+    const [infoMovie , setInfoMovie] = useState([])
+    const params = useParams()
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        axios({
+            method : "get",
+            url : process.env.REACT_APP_BASE_URL_API + "api/movie/intro/" + params._id ,
+        })
+        .then(res => {
+            setInfoMovie(res.data.data)
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }, [])
 
     const navigate = useNavigate()
   return (
@@ -19,17 +38,37 @@ const INTROFILMS = () => {
                 <div>
                     <div style={
                         {
-                            border : "4px solid #444"
+                            border : "4px solid #444",
+                            width : 250,
+                            maxWidth : 250,
+                            height : 354,
+                            maxHeight : 354,
+                            position : "relative"
                         }
                     }>
                         <div>
-                            <img src='https://vuianime.pro/upload/images/71huQc7.jpg' />
+                            <img style={
+                                {
+                                    width : "100%",
+                                    height : "100%",
+                                    position : "absolute",
+                                    top : 0,
+                                    left : 0,
+                                    right : 0,
+                                    bottom : 0
+                                }
+                            } src={infoMovie.img || ""} />
                         </div>
                     </div>
                     <div>
                         <button 
                         onClick={() => {
-                            navigate("/phim-anime/abc")
+                            navigate(`/phim-anime/${infoMovie._id}`)
+                            dispatch(movieSlice.actions.PageMovie(1))
+                            axios({
+                                method : "put",
+                                url : process.env.REACT_APP_BASE_URL_API + "api/movie/uploadview/" + infoMovie._id ,
+                            })
                         }}
                         className={cx("btn_see")}>Xem phim</button>
                     </div>
@@ -43,7 +82,7 @@ const INTROFILMS = () => {
                         marginLeft : 10,
                         color : "yellow"
                     }
-                }>Thôn Phệ Tinh Không</p>
+                }>{infoMovie?.name || "phim anime"}</p>
             </div>
             <div className={cx("name_films_years")}>
                 <p style={
@@ -52,7 +91,7 @@ const INTROFILMS = () => {
                         fontSize : "1.1rem",
                         color : "white"
                     }
-                }>Swallowed Star (2020) </p>
+                }>{infoMovie?.description}</p>
             </div>
             <div className={cx("three_new_chapter")}>
                 <div>
@@ -64,9 +103,36 @@ const INTROFILMS = () => {
                         }
                     }>Tập mới:</p>
                 </div>
-                <button className={cx("new_chapter")}>85</button>
-                <button className={cx("new_chapter")}>84</button>
-                <button className={cx("new_chapter")}>83</button>
+                <button 
+                onClick={() => {
+                    navigate(`/phim-anime/${infoMovie._id}`)
+                    dispatch(movieSlice.actions.PageMovie(infoMovie?.Episode?.length))
+                    axios({
+                        method : "put",
+                        url : process.env.REACT_APP_BASE_URL_API + "api/movie/uploadview/" + infoMovie._id ,
+                    })
+                }}
+                className={cx("new_chapter")}>{infoMovie?.Episode?.length}</button>
+                {infoMovie?.Episode?.length >= 1 && <button 
+                onClick={() => {
+                    navigate(`/phim-anime/${infoMovie._id}`)
+                    dispatch(movieSlice.actions.PageMovie(infoMovie?.Episode?.length - 1))
+                    axios({
+                        method : "put",
+                        url : process.env.REACT_APP_BASE_URL_API + "api/movie/uploadview/" + infoMovie._id ,
+                    })
+                }}
+                className={cx("new_chapter")}>{infoMovie?.Episode?.length - 1}</button>}
+                {infoMovie?.Episode?.length >= 2 && <button 
+                onClick={() => {
+                    navigate(`/phim-anime/${infoMovie._id}`)
+                    dispatch(movieSlice?.actions.PageMovie(infoMovie?.Episode?.length - 2))
+                    axios({
+                        method : "put",
+                        url : process.env.REACT_APP_BASE_URL_API + "api/movie/uploadview/" + infoMovie._id ,
+                    })
+                }}
+                className={cx("new_chapter")}>{infoMovie?.Episode?.length - 2}</button>}
             </div>
             <div className={cx("episode")}>
                 <p style={
@@ -79,7 +145,7 @@ const INTROFILMS = () => {
                     {
                         color : "yellow"
                     }
-                }>85 / ?? Tập Vietsub</span></p>
+                }>{infoMovie?.Episode?.length} / ?? Tập Vietsub</span></p>
             </div>
             <div className={cx("category")}>
                 <p style={
@@ -118,7 +184,7 @@ const INTROFILMS = () => {
                         color : "#dcdcdc",
                         fontSize : ".8rem"
                     }
-                }>100,345</span></p>
+                }>{infoMovie?.view}</span></p>
             </div>
             <div className={cx("media_year")}>
                 <p style={
@@ -131,7 +197,7 @@ const INTROFILMS = () => {
                         color : "#729dc7",
                         fontSize : ".9rem"
                     }
-                }>2020</span></p>
+                }>{infoMovie?.year}</span></p>
             </div>
             <div className={cx("show_like")}>
                     <button style={
@@ -160,7 +226,7 @@ const INTROFILMS = () => {
                         {
                             marginLeft : 5
                         }
-                    }>17</span>
+                    }>{infoMovie.like}</span>
                     </button>
                     <button style={
                         {
@@ -245,14 +311,16 @@ const INTROFILMS = () => {
                 {
                     fontSize : '.9rem',
                 }
-            }> Nhân vật chính của truyện là La Phong, sinh ra sau thời kì Đại Niết Bàn (là thời kỳ diễn ra vào đầu thế kỷ thứ 21 tại Trái Đất khi nhân loại bị dịch bệnh diệt vong hơn 1 tỷ người, đồng thời bệnh dịch cũng khiến tất cả giống loài trên Trái Đất bị biến dị, trở nên mạnh mẽ và hung tàn hơn). Cha mẹ La Phong đều rất nghèo, em trai La Hoa bị liệt, cả gia đình có cuộc sống rất khó khăn nên La Phong từ nhỏ đã mang trong mình một nghị lực và quyết tâm rất lớn, đó là thay đổi vận mệnh gia đình mình. </span>
+            }>
+                {infoMovie?.contentMovie}
+            </span>
         </div>
         <div className={cx("info_content2")}>
             <span style={
                 {
                     fontSize : '.9rem'
                 }
-            }>  Xem phim Thôn Phệ Tinh Không Vietsub, Xem Phim Thôn Phệ Tinh Không thuyết minh, Xem Phim Thôn Phệ Tinh Không vietsub online, Thôn Phệ Tinh Không 85/?? Tập, Thôn Phệ Tinh Không bản đẹp, Thôn Phệ Tinh Không trọn bộ, Thôn Phệ Tinh Không vietsub, Xem phim Swallowed Star Vietsub, Swallowed Star thuyết minh, Swallowed Star 85/?? Tập, Swallowed Star bản đẹp, Swallowed Star trọn bộ, Swallowed Star vietsub  </span>
+            }>  Xem phim {infoMovie?.name} Vietsub, Xem Phim {infoMovie?.name} thuyết minh, Xem Phim {infoMovie.name} vietsub online, {infoMovie.name} 85/?? Tập, {infoMovie.name} bản đẹp, {infoMovie.name} trọn bộ, {infoMovie.name} vietsub, Xem phim Swallowed Star Vietsub, Swallowed Star thuyết minh, Swallowed Star 85/?? Tập, Swallowed Star bản đẹp, Swallowed Star trọn bộ, Swallowed Star vietsub  </span>
         </div>
         <div className={cx("comment")}>
             <div className={cx("show_number_comment")}>

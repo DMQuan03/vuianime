@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import classNames from 'classnames/bind'
 import styles from './index.module.scss'
 import LISTFILMS from '../Home/listFilms/listfilms'
+import axios from 'axios'
 
 const cx = classNames.bind(styles)
 
@@ -11,6 +12,27 @@ const test = [
 ]
 
 const ALLFILMS = () => {
+
+    const [page , setPage] = useState(1)
+    const [listFilms , setListFilms] = useState([] ?? [])
+    const [maxPage , setMaxpage] = useState(0)
+    useEffect(() => {
+        axios({
+            method : "get",
+            url : process.env.REACT_APP_BASE_URL_API + "api/movie/" + "?page=" + page,
+        })
+        .then(res => {
+            if (res.data.data.length <= 0) {
+                setPage(page - 1)
+            }
+            setMaxpage(res.data.maxPage)
+            setListFilms(res.data.data)
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }, [page])
+
 
     const navigate = useNavigate()
   return (
@@ -133,7 +155,6 @@ const ALLFILMS = () => {
                 </div>
                 <div > 
                     <select onChange={(e) => {
-                        console.log(e.target.value)
                     }} className={cx("slector-tag")} name="year" id="year" fdprocessedid="nyhl8">
                         <option value="all">-- Năm --</option>
                         <option value="2021">2021</option>
@@ -176,15 +197,54 @@ const ALLFILMS = () => {
             </div>
         </div>
         <div className={cx("list_films")}>
-            {test.map(el => {
-                return <LISTFILMS />
+            {listFilms?.map(el => {
+                return <LISTFILMS data={el} key={el._id} />
             })}
         </div>
         <div className={cx("page-films")}>
             <div className={cx("nav_page")}>
-                <button className={cx("btn_start_end")}>trang đầu</button>
-                <div className={cx("page_Now")}>1</div>
-                <button className={cx("btn_start_end")}>trang cuối</button>
+                <button 
+                onClick={() => {
+                    setPage(1)
+                }}
+                className={cx("btn_start_end")}>start</button>
+                <button 
+                onClick={() => {
+                    if (page > 1) {
+                        setPage(page - 1)
+                    }else {
+                        setPage(1)
+                    }
+                }}
+                style={
+                    {
+                        marginLeft : 5,
+                        border : "none",
+                        outline :"none",
+                        borderRadius : "50%"
+                    }
+                }>-</button>
+                <div className={cx("page_Now")}>{page}</div>
+                <button 
+                onClick={() => {
+                    setPage(page + 1)
+                    if (page === maxPage) {
+                        setPage(page)
+                    }
+                }}
+                style={
+                    {
+                        marginRight : 5,
+                        border : "none",
+                        outline :"none",
+                        borderRadius : "50%"
+                    }
+                }>+</button>
+                <button 
+                onClick={() => {
+                    setPage(maxPage)
+                }}
+                className={cx("btn_start_end")}>end</button>
             </div>
         </div>
         <footer className={cx("foot_web")}>

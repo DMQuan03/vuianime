@@ -1,13 +1,17 @@
 import React from 'react'
+import {useNavigate} from "react-router-dom"
 import classNames from 'classnames/bind'
 import styles from "./listfilms.module.scss"
 
 const cx = classNames.bind(styles)
-const LISTFILMS = () => {
+const LISTFILMS = ({data}) => {
+    const navigate = useNavigate()
   return (
     <div className={cx("wrapper_list_films")}>
         <div className={cx("img_films")}>
-            <img src='https://vuianime.pro/upload/images/71huQc7.jpg' />
+            <img onClick={() => {
+                navigate(`/detail/${data._id}`)
+            }} src={data?.img || 'https://vuianime.pro/upload/images/71huQc7.jpg'} />
         </div>
         <div className={cx("intro_films")}>
             <div className={cx("name_films")}>
@@ -16,14 +20,14 @@ const LISTFILMS = () => {
                         marginLeft : 10,
                         color : "yellow"
                     }
-                }>Thôn Phệ Tinh Không</p>
+                }>{data.name.length > 25 ? data?.name.slice(0,15) + "..." : data.name  || "phim mới"}</p>
             </div>
-            <div className={cx("name_films")}>
-                <p style={
+            <div className={cx("name_films1")}>
+                <span style={
                     {
                         marginLeft : 10
                     }
-                }>Swallowed Star (2020)</p>
+                }>{data.description.length > 25 ? data?.description.slice(0,15) + "..." : data.description}</span>
             </div>
         </div>
     </div>

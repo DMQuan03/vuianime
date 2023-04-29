@@ -38,7 +38,7 @@
             align-items: center;
             text-align: center;
             height: auto;
-            height: 40px;
+            height: auto;
             overflow: hidden;
             max-height: 40px;
         }
@@ -48,11 +48,11 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            text-align: center;
+            text-align: start;
             height: auto;
-            height: 20px;
+            height: auto;
+            min-height: 20px;
             overflow: hidden;
-            max-height: 40px;
         }
         .three_new_chapter {
             width: 100%;

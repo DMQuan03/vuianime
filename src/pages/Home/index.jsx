@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {useNavigate} from "react-router-dom"
 import classNames from 'classnames/bind'
 import styles from "./home.module.scss"
@@ -7,6 +7,7 @@ import {
 } from "react-icons/gi"
 import LISTFILMS from './listFilms/listfilms'
 import ConfigRoutes from '../../config/config.routes'
+import axios from 'axios'
 
 const test = [
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -15,6 +16,19 @@ const test = [
 const cx = classNames.bind(styles)
 const HOMEPAGE = () => {
     const navigate = useNavigate()
+    const [updateNew , setUpdateNew ] = useState([] ?? [])
+    useEffect(() => {
+        axios({
+            method : "get",
+            url : process.env.REACT_APP_BASE_URL_API + "api/movie/tenmovie"
+        })
+        .then(res => {
+            setUpdateNew(res.data.data)
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }, [])
   return (
     <div className={cx("wrapper_home")}>
         <div className={cx("selector_films")}>
@@ -39,13 +53,17 @@ const HOMEPAGE = () => {
                     }>Xem tất cả</p></div>
             </div>
         <div className={cx("list_films")}>
-            {test.map(el => {
-                return <LISTFILMS />
+            {updateNew && updateNew?.map(el => {
+                return <LISTFILMS key={el._id} data={el} />
             })}
         </div>
         <footer className={cx("foot_web")}>
             <div className={cx("info_footer")}>
-                <div className={cx("logo_footer")} >
+                <div 
+                onClick={() => {
+                    navigate(`/detail/`)
+                }}
+                className={cx("logo_footer")} >
                     <img style={
                         {
                             width : 140,

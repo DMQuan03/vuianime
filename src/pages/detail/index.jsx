@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import classNames from 'classnames/bind'
 import styles from "./index.module.scss"
 import {
     RiComputerLine
 } from "react-icons/ri"
-import LISTCHANELCHAPTER from './listChanleChapter'
+import axios from 'axios'
+import { useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import movieSlice from '../../redux/slice/movieSlice'
 
 const cx = classNames.bind(styles)
 
@@ -13,6 +16,45 @@ const test = [
 ]
 
 const DETAIL = () => {
+
+    const [infoMovie , setInfoMovie] = useState([])
+    const [infoMovieVideo , setInfoMovieVideo] = useState([])
+    const params = useParams()
+    const dispatch = useDispatch()
+    const page = useSelector(state => state.movie.page)
+
+    useEffect(() => {
+        axios({
+            method : "get",
+            url : process.env.REACT_APP_BASE_URL_API + "api/movie/intro/" + params._id ,
+        })
+        .then(res => {
+            setInfoMovie(res.data.data)
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }, [])
+
+
+
+    useEffect(() => {
+        axios({
+            method : "get",
+            url : process.env.REACT_APP_BASE_URL_API + "api/movie/phim/" + params._id + "/page/" + page,
+        })
+        .then(res => {
+            if (res.data.data.length <= 0) {
+                dispatch(movieSlice.actions.PageMovie(page - 1))
+            }
+            setInfoMovieVideo(res.data.data)
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }, [page])
+
+
     const LIST_CHANEL = [
         {
             title : "FA#1",
@@ -37,9 +79,7 @@ const DETAIL = () => {
     ]
   return (
     <div className={cx("wrapper")}>
-        <video width="100%" height="240" className={cx("clip_video")} controls>
-            <source src="https://scontent.cdninstagram.com/v/t39.25447-2/10000000_264934085878583_3029675912856370387_n.mp4?_nc_cat=100&amp;vs=e7845740b9f7de6a&amp;_nc_vs=HBksFQAYJEdJQ1dtQUEzNHhQRzlQQUFBTk44WE5vd2tnc3FibWRqQUFBRhUAAsgBABUAGCRHTzVEYXhRaW1IQmNKaVlDQUVBT185ZDNCT2dHYnJGcUFBQUYVAgLIAQBLB4gScHJvZ3Jlc3NpdmVfcmVjaXBlATENc3Vic2FtcGxlX2ZwcwAQdm1hZl9lbmFibGVfbnN1YgAgbWVhc3VyZV9vcmlnaW5hbF9yZXNvbHV0aW9uX3NzaW0AKGNvbXB1dGVfc3NpbV9vbmx5X2F0X29yaWdpbmFsX3Jlc29sdXRpb24AHXVzZV9sYW5jem9zX2Zvcl92cW1fdXBzY2FsaW5nABFkaXNhYmxlX3Bvc3RfcHZxcwAVACUAHAAAJojj6pzouJ0CFQIoAkMzGAt2dHNfcHJldmlldxwXQJJUAAAAAAAYKWRhc2hfaTRsaXRlYmFzaWNfNXNlY2dvcF9ocTJfZnJhZ18yX3ZpZGVvEgAYGHZpZGVvcy52dHMuY2FsbGJhY2sucHJvZDgSVklERU9fVklFV19SRVFVRVNUGwqIFW9lbV90YXJnZXRfZW5jb2RlX3RhZwZvZXBfaGQTb2VtX3JlcXVlc3RfdGltZV9tcwEwDG9lbV9jZmdfcnVsZQd1bm11dGVkE29lbV9yb2lfcmVhY2hfY291bnQBMBFvZW1faXNfZXhwZXJpbWVudAAMb2VtX3ZpZGVvX2lkEDI0NDY1MzM2NTg4NTA5MjISb2VtX3ZpZGVvX2Fzc2V0X2lkDzIwOTgxOTA3MTc2NTU5MBVvZW1fdmlkZW9fcmVzb3VyY2VfaWQPNjI3Njk3Njg5Mzg1MTU2HG9lbV9zb3VyY2VfdmlkZW9fZW5jb2RpbmdfaWQQMTE5MTY1Nzg2MTUzODI3MA52dHNfcmVxdWVzdF9pZAAlAhwAJY4CGwiIAXMEMTczOAJjZAoyMDIzLTA0LTI2A3JjYgEwA2FwcAZ1cGxvYWQCY3QZQ09OVEFJTkVEX1BPU1RfQVRUQUNITUVOVBNvcmlnaW5hbF9kdXJhdGlvbl9zBDExNzMBZgJhZAJ0cxVwcm9ncmVzc2l2ZV9lbmNvZGluZ3MA&amp;ccb=1-7&amp;_nc_sid=41a7d5&amp;efg=eyJ2ZW5jb2RlX3RhZyI6Im9lcF9oZCJ9&amp;_nc_ohc=1bbmVP5fP0oAX_KDTVt&amp;_nc_ht=scontent-sin6-4.xx&amp;edm=APRAPSkEAAAA&amp;oh=00_AfCnAySZv3Mb4uOTx4Ufp8Dn7_VCK-Q7vfSqkrjttuyO2w&amp;oe=64508168&amp;_nc_rid=246314180434936" />
-        </video>
+        <video src={infoMovieVideo[0]?.video || 'https://scontent.cdninstagram.com/v/t39.25447-2/10000000_264934085878583_3029675912856370387_n.mp4?_nc_cat=100&amp;vs=e7845740b9f7de6a&amp;_nc_vs=HBksFQAYJEdJQ1dtQUEzNHhQRzlQQUFBTk44WE5vd2tnc3FibWRqQUFBRhUAAsgBABUAGCRHTzVEYXhRaW1IQmNKaVlDQUVBT185ZDNCT2dHYnJGcUFBQUYVAgLIAQBLB4gScHJvZ3Jlc3NpdmVfcmVjaXBlATENc3Vic2FtcGxlX2ZwcwAQdm1hZl9lbmFibGVfbnN1YgAgbWVhc3VyZV9vcmlnaW5hbF9yZXNvbHV0aW9uX3NzaW0AKGNvbXB1dGVfc3NpbV9vbmx5X2F0X29yaWdpbmFsX3Jlc29sdXRpb24AHXVzZV9sYW5jem9zX2Zvcl92cW1fdXBzY2FsaW5nABFkaXNhYmxlX3Bvc3RfcHZxcwAVACUAHAAAJojj6pzouJ0CFQIoAkMzGAt2dHNfcHJldmlldxwXQJJUAAAAAAAYKWRhc2hfaTRsaXRlYmFzaWNfNXNlY2dvcF9ocTJfZnJhZ18yX3ZpZGVvEgAYGHZpZGVvcy52dHMuY2FsbGJhY2sucHJvZDgSVklERU9fVklFV19SRVFVRVNUGwqIFW9lbV90YXJnZXRfZW5jb2RlX3RhZwZvZXBfaGQTb2VtX3JlcXVlc3RfdGltZV9tcwEwDG9lbV9jZmdfcnVsZQd1bm11dGVkE29lbV9yb2lfcmVhY2hfY291bnQBMBFvZW1faXNfZXhwZXJpbWVudAAMb2VtX3ZpZGVvX2lkEDI0NDY1MzM2NTg4NTA5MjISb2VtX3ZpZGVvX2Fzc2V0X2lkDzIwOTgxOTA3MTc2NTU5MBVvZW1fdmlkZW9fcmVzb3VyY2VfaWQPNjI3Njk3Njg5Mzg1MTU2HG9lbV9zb3VyY2VfdmlkZW9fZW5jb2RpbmdfaWQQMTE5MTY1Nzg2MTUzODI3MA52dHNfcmVxdWVzdF9pZAAlAhwAJY4CGwiIAXMEMTczOAJjZAoyMDIzLTA0LTI2A3JjYgEwA2FwcAZ1cGxvYWQCY3QZQ09OVEFJTkVEX1BPU1RfQVRUQUNITUVOVBNvcmlnaW5hbF9kdXJhdGlvbl9zBDExNzMBZgJhZAJ0cxVwcm9ncmVzc2l2ZV9lbmNvZGluZ3MA&amp;ccb=1-7&amp;_nc_sid=41a7d5&amp;efg=eyJ2ZW5jb2RlX3RhZyI6Im9lcF9oZCJ9&amp;_nc_ohc=1bbmVP5fP0oAX_KDTVt&amp;_nc_ht=scontent-sin6-4.xx&amp;edm=APRAPSkEAAAA&amp;oh=00_AfCnAySZv3Mb4uOTx4Ufp8Dn7_VCK-Q7vfSqkrjttuyO2w&amp;oe=64508168&amp;_nc_rid=246314180434936'} width="100%" height="240" className={cx("clip_video")} controls></video>
         <div className={cx("nav_bar_detail")}>
             <div style={
                 {
@@ -52,7 +92,11 @@ const DETAIL = () => {
                     height : 20,
                     marginRight : 5
                 }
-            }><p style={
+            }><p 
+            onClick={() => {
+                dispatch(movieSlice.actions.plusPage())
+            }}
+            style={
                 {
                     color : 'white'
                 }
@@ -133,7 +177,7 @@ const DETAIL = () => {
                     marginLeft : 10,
                     color : "yellow"
                 }
-            }> Thôn Phệ Tinh Không Tập 01 </p>
+            }> {infoMovie?.name} Tập {infoMovieVideo[0]?.Episode} </p>
         </div>
         <div className={cx("name_films_years")}>
             <p style={
@@ -143,7 +187,7 @@ const DETAIL = () => {
                     fontWeight : 500,
                     color : "white"
                 }
-            }> « Swallowed Star (2020) </p>
+            }> {infoMovie?.description} </p>
         </div>
         <div className={cx("happy")}>
             <p style={
@@ -236,10 +280,15 @@ const DETAIL = () => {
                 }>Server Auto</p>
             </div>
             <div className={cx("chanel_films_chapter")}>
-                {test.map(el => {
-                    return <div className={cx("page-films")} onClick={() => {
-                        alert(el)
-                    }}>{el}</div>
+                {infoMovie?.Episode?.map(el => {
+                    return <div key={el._id} className={cx("page-films")} onClick={() => {
+                        dispatch(movieSlice.actions.PageMovie(el.Episode))
+                    }}><p style={
+                        {
+                            fontSize : "1.2rem",
+                            fontWeight : 600
+                        }
+                    }>{el.Episode}</p></div>
                 })}
             </div>
         </div>

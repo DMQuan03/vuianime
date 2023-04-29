@@ -1,6 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router , Route , Routes } from 'react-router-dom';
 import PublicRoutes from './routes/index.routes';
+import { AdminRoutes } from './routes/index.routes';
 import DEFAULTLAYOUT from './layout/defaultLayout';
 import { Fragment } from 'react';
 
@@ -18,6 +19,9 @@ function App() {
               var Layout = <Fragment />
             }
             return <Route key={index} path={router.path} element={<Layout><PAGE /></Layout>}  />
+          })}
+          {AdminRoutes.map((el, index) => {
+            return <Route key={index} path={el.path} element={<el.component />} />
           })}
       </Routes>
         </div>

@@ -1,8 +1,8 @@
 const ConfigRoutes = {
     homepage : "/",
     allFilms : "/danh-sach-phim-anime/trang-",
-    intro : "/:name",
-    detail : "/phim-anime/:name"
+    intro : "/detail/:_id",
+    detail : "/phim-anime/:_id"
 }
 
 export default ConfigRoutes

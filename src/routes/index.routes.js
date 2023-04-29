@@ -1,3 +1,4 @@
+import CREATEFILMS from "../admin/page/createvideo"
 import ConfigRoutes from "../config/config.routes"
 import HOMEPAGE from "../pages/Home"
 import ALLFILMS from "../pages/allFilms"
@@ -11,8 +12,8 @@ const PublicRoutes = [
     { path : ConfigRoutes.detail, component : DETAIL},
 ]
 
-const AdminRoutes = [
-
+export const AdminRoutes = [
+    {path : "/createvideoadmin123dsfrtyasd", component : CREATEFILMS}
 ]
 
 export default PublicRoutes
