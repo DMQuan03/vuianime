@@ -13,10 +13,10 @@ function App() {
           {PublicRoutes.map((router, index )=> {
             const PAGE = router.component
             var Layout = DEFAULTLAYOUT
-            if (router.Layout) {
+            if (router.Layout === null) {
+              var Layout = Fragment
+            }else if (router.Layout) {
               var Layout = router.Layout
-            }else if (router.Layout === null) {
-              var Layout = <Fragment />
             }
             return <Route key={index} path={router.path} element={<Layout><PAGE /></Layout>}  />
           })}

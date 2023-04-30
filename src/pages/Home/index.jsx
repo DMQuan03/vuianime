@@ -26,7 +26,7 @@ const HOMEPAGE = () => {
             setUpdateNew(res.data.data)
         })
         .catch(err => {
-            console.log(err);
+            return 0
         })
     }, [])
   return (

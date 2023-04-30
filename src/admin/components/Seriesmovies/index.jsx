@@ -31,10 +31,10 @@ const SERIESMOVIE = () => {
             }
         })
         .then(res => {
-            console.log(res);
+            return 1
         })
         .catch(err => {
-            console.log(err);
+            return 0
         })
     }
 

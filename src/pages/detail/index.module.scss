@@ -5,7 +5,7 @@
     right: 0;
     background-color: #1a1a1a;
     overflow: auto;
-    min-height: 700px;
+    min-height: 550px;
     .video_true {
         width: 100%;
         min-height: 210px;
@@ -64,7 +64,9 @@
     }
     .name_films {
         width: 100%;
-        height: 50px;
+        height: auto;
+        min-height: 50px;
+        max-height: 100px;
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -126,62 +128,6 @@
             }
         }
     }
-    .comment {
-        width: 100%;
-        height: auto;
-        min-height: 250px;
-        background-color: white;
-        margin-top: 10px;
-        .show_number_comment {
-            width: 100%;
-            height: 70px;
-            background-color: #fff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-align: center;
-            padding: 5px;
-            box-sizing: border-box;
-            border-bottom: 1px solid #cbc4c4;
-            padding-bottom: 30px;
-        }
-        .input_comment {
-            width: 100%;
-            min-height: 100px;
-            background-color: #fff;
-            position: relative;
-            height: auto;
-            padding: 10px;
-            box-sizing: border-box;
-            .btn_comment {
-                width: 99.3%;
-                height: 40px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                text-align: center;
-                border: 1px solid #beb8b8;
-            }
-            .btn_comment input {
-                width: 80%;
-                outline: none;
-                margin-left: 5px;
-            }
-        }
-        .link_facebook {
-            width: 100%;
-            height: 40px;
-            display: flex;
-            justify-content: flex-start;
-            margin-top: 20px;
-            align-items: center;
-            text-align: center;
-        }
-        .link_facebook img {
-            width: 20px;
-            height: 20px;
-        }
-    }
     .foot_web {
         width: 100%;
         height: 85px;
@@ -212,4 +158,11 @@
             }
         }
     }
+}
+
+
+.offled {
+    width: 100%;
+    background-color: black;
+    height: 280px;
 }

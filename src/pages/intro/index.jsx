@@ -8,14 +8,22 @@ import {
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import movieSlice from '../../redux/slice/movieSlice'
+import { io } from "socket.io-client"
+import COMMENT from '../../components/comment'
+
+const socket = io.connect(process.env.REACT_APP_URL_SOCKET)
 
 const cx = classNames.bind(styles)
 
+
 const INTROFILMS = () => {
 
-    const [infoMovie , setInfoMovie] = useState([])
     const params = useParams()
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const [infoMovie , setInfoMovie] = useState([] ?? [])
+
 
     useEffect(() => {
         axios({
@@ -26,11 +34,21 @@ const INTROFILMS = () => {
             setInfoMovie(res.data.data)
         })
         .catch(err => {
-            console.log(err);
+            return 0
         })
+    }, [infoMovie])
+
+   
+    
+    useEffect(() => {
+        socket.emit("join_room", { id : params._id })
+        return () => {
+            socket.emit("leave_room", { id : params._id})
+        }
     }, [])
 
-    const navigate = useNavigate()
+   
+    
   return (
     <div className={cx("wrapper")}>
         <main className={cx("intro_films")}>
@@ -322,69 +340,7 @@ const INTROFILMS = () => {
                 }
             }>  Xem phim {infoMovie?.name} Vietsub, Xem Phim {infoMovie?.name} thuyết minh, Xem Phim {infoMovie.name} vietsub online, {infoMovie.name} 85/?? Tập, {infoMovie.name} bản đẹp, {infoMovie.name} trọn bộ, {infoMovie.name} vietsub, Xem phim Swallowed Star Vietsub, Swallowed Star thuyết minh, Swallowed Star 85/?? Tập, Swallowed Star bản đẹp, Swallowed Star trọn bộ, Swallowed Star vietsub  </span>
         </div>
-        <div className={cx("comment")}>
-            <div className={cx("show_number_comment")}>
-                <p style={
-                    {
-                        marginLeft : 5,
-                        fontWeight : 600
-                    }
-                }>0 bình luận</p>
-                <div style={{
-                    display  : "flex",
-                    justifyContent : "center",
-                    alignItems : "center",
-                    marginRight : 5
-                }}>
-                    <p style={
-                        {
-                            marginRight : 5,
-                            color : "#94979b"
-                        }
-                    }>Sắp xếp theo</p>
-                    <select class="_3-8_ _33ki" initialvalue="reverse_time">
-                        <option value="reverse_time">Mới nhất</option>
-                        <option value="time">Cũ nhất</option>
-                        <option value="toplevel"></option>
-                    </select>
-                </div>
-            </div>
-            <div className={cx("input_comment")}>
-                <div style={
-                    {
-                        width : '100%',
-                        minHeight : '40px',
-                        position : 'relative',
-                        backgroundColor : "white",
-                        height : "auto",
-                        border : '1px solid #666',
-                        overflow : 'hidden',
-                        padding : 10,
-                        boxSizing : "border-box",
-                    }
-                }>
-                    <span>hello anh em nhe</span>
-                </div>
-                <div className={cx("btn_comment")}>
-                    <input></input>
-                    <button style={
-                        {
-                            marginRight : 5
-                        }
-                    }>Đăng</button>
-                </div>
-                <div className={cx("link_facebook")}>
-                    <img src='https://www.facebook.com/images/fb_icon_325x325.png' />
-                    <span style={
-                        {
-                            fontSize : ".8rem",
-                            marginLeft : 10
-                        }
-                    }>Plugin bình luận trên Facebook</span>
-                </div>
-            </div>
-            
-        </div>
+        <COMMENT />
         <footer className={cx("foot_web")}>
             <div className={cx("info_footer")}>
                 <div className={cx("logo_footer")} >

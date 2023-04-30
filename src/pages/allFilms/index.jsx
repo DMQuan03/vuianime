@@ -7,10 +7,6 @@ import axios from 'axios'
 
 const cx = classNames.bind(styles)
 
-const test = [
-    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-]
-
 const ALLFILMS = () => {
 
     const [page , setPage] = useState(1)
@@ -29,7 +25,7 @@ const ALLFILMS = () => {
             setListFilms(res.data.data)
         })
         .catch(err => {
-            console.log(err);
+            return 0
         })
     }, [page])
 
@@ -221,7 +217,8 @@ const ALLFILMS = () => {
                         marginLeft : 5,
                         border : "none",
                         outline :"none",
-                        borderRadius : "50%"
+                        borderRadius : "50%",
+                        backgroundColor : "white"
                     }
                 }>-</button>
                 <div className={cx("page_Now")}>{page}</div>
@@ -237,7 +234,8 @@ const ALLFILMS = () => {
                         marginRight : 5,
                         border : "none",
                         outline :"none",
-                        borderRadius : "50%"
+                        borderRadius : "50%",
+                        backgroundColor : "white"
                     }
                 }>+</button>
                 <button 

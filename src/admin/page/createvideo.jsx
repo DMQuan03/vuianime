@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classnames from 'classnames/bind'
 import styles from "./index.module.scss"
 import Tippy from "@tippyjs/react/headless"
@@ -7,19 +7,21 @@ import ADDFILMS from '../components/addfilmstomovie'
 const cx = classnames.bind(styles)
 const CREATEFILMS = () => {
 
+    const [checkCreateFilms , setCheckCreateFilms] = useState(false)
+
     const MENU_CREATE = [
         {
             title : "thêm phim bộ",
             id : 1,
             handleNav : () =>{
-                console.log(1)
+                setCheckCreateFilms(true)
             }
         },
         {
             title : "thêm phim lẻ",
             id : 2,
             handleNav : () => {
-
+                setCheckCreateFilms(false)
             }
         }
     ]
@@ -46,8 +48,10 @@ const CREATEFILMS = () => {
             <a>Comment</a>
             <a>User</a>
         </div>
-        <SERIESMOVIE />
-        {/* <ADDFILMS /> */}
+        {checkCreateFilms ? <SERIESMOVIE />
+        :
+        <ADDFILMS />
+        }
     </div>
   )
 }

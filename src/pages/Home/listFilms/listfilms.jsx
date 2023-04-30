@@ -2,6 +2,10 @@ import React from 'react'
 import {useNavigate} from "react-router-dom"
 import classNames from 'classnames/bind'
 import styles from "./listfilms.module.scss"
+import { io } from 'socket.io-client'
+
+const socket = io.connect(process.env.REACT_APP_URL_SOCKET)
+
 
 const cx = classNames.bind(styles)
 const LISTFILMS = ({data}) => {

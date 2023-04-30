@@ -20,7 +20,7 @@ const ADDFILMS = () => {
             return 1
         })
         .catch(err => {
-            console.log(err);
+            return 0
         })
     }
   return (
